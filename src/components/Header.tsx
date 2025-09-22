@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Search, Heart, Menu, X, LogOut, Settings } from 'lucide-react';
+import { User, Search, Heart, Menu, X, LogOut } from 'lucide-react';
 import { InfoPageType } from '../types';
 
 interface HeaderProps {
@@ -74,6 +74,11 @@ const Header: React.FC<HeaderProps> = ({
               className="text-white hover:text-gold transition-colors duration-300 font-medium">
               SALE
             </button>
+            <button 
+              onClick={() => handleCategoryClick('shoes')}
+              className="text-white hover:text-gold transition-colors duration-300 font-medium">
+              SHOES
+            </button>
           </nav>
 
           {/* Right Side Icons */}
@@ -96,19 +101,29 @@ const Header: React.FC<HeaderProps> = ({
               </button>
 
               {isProfileOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-xl shadow-xl">
+                <div className="fixed right-4 top-20 w-56 bg-gray-900 border border-gray-700 rounded-xl shadow-xl z-50">
                   <div className="p-4 border-b border-gray-700">
-                    <p className="font-medium text-white">{user.firstName} {user.lastName}</p>
-                    <p className="text-sm text-gray-400">{user.email}</p>
+                    {user ? (
+                      <>
+                        <p className="font-medium text-white">{user.firstName} {user.lastName}</p>
+                        {user.email && (
+                          <p className="text-sm text-gray-400">{user.email}</p>
+                        )}
+                      </>
+                    ) : (
+                      <p className="font-medium text-white">Account</p>
+                    )}
                   </div>
                   <div className="p-2">
-                    <button
-                      onClick={onLogout}
-                      className="w-full flex items-center space-x-2 p-2 text-red-400 hover:bg-gray-800 rounded-lg transition-colors"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>Sign Out</span>
-                    </button>
+                    {user && (
+                      <button
+                        onClick={onLogout}
+                        className="w-full flex items-center space-x-2 p-2 text-red-400 hover:bg-gray-800 rounded-lg transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Sign Out</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               )}
@@ -181,6 +196,15 @@ const Header: React.FC<HeaderProps> = ({
                 className="text-white hover:text-gold transition-colors duration-300 font-medium py-2 text-left"
               >
                 SALE
+              </button>
+              <button 
+                onClick={() => {
+                  handleCategoryClick('shoes');
+                  setIsMenuOpen(false);
+                }}
+                className="text-white hover:text-gold transition-colors duration-300 font-medium py-2 text-left"
+              >
+                SHOES
               </button>
             </nav>
           </div>

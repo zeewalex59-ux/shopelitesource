@@ -34,7 +34,8 @@ const ProductCatalog: React.FC<ProductCatalogProps> = ({
     { id: 'men', name: 'MEN' },
     { id: 'kids', name: 'KIDS' },
     { id: 'accessories', name: 'ACCESSORIES' },
-    { id: 'sale', name: 'SALE' }
+    { id: 'sale', name: 'SALE' },
+    { id: 'shoes', name: 'SHOES' },
   ];
 
   const filteredProducts = products.filter(product => 

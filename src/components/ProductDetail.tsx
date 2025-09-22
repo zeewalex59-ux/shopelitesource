@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
-import { ArrowLeft, Heart, Star, MessageCircle, User } from 'lucide-react';
+import { ArrowLeft, Heart, Star, MessageCircle } from 'lucide-react';
 import ReviewSection from './ReviewSection';
 
 interface ProductDetailProps {
@@ -18,7 +18,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
 }) => {
   const [selectedSize, setSelectedSize] = useState<string>('');
 
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  const clothingSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  const shoeSizes = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
+  const isShoes = (product.category || '').toLowerCase() === 'shoes';
+  const isAccessories = (product.category || '').toLowerCase() === 'accessories';
+  const sizes = isShoes ? shoeSizes : clothingSizes;
 
   const handleWhatsAppRequest = () => {
     const message = `Hi! I'm interested in this product from Elite Source:
@@ -121,24 +125,26 @@ Product Image: ${product.image}`;
             </div>
 
             {/* Size Selection */}
-            <div>
-              <h3 className="text-white font-bold mb-4">SIZE</h3>
-              <div className="grid grid-cols-6 gap-3">
-                {sizes.map(size => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`py-3 px-4 border rounded-lg font-medium transition-all duration-300 ${
-                      selectedSize === size
-                        ? 'border-gold bg-gold text-black'
-                        : 'border-gray-700 text-gray-300 hover:border-gold hover:text-gold'
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
+            {!isAccessories && (
+              <div>
+                <h3 className="text-white font-bold mb-4">{isShoes ? 'SHOE SIZE' : 'SIZE'}</h3>
+                <div className="grid grid-cols-6 gap-3">
+                  {sizes.map(size => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`py-3 px-4 border rounded-lg font-medium transition-all duration-300 ${
+                        selectedSize === size
+                          ? 'border-gold bg-gold text-black'
+                          : 'border-gray-700 text-gray-300 hover:border-gold hover:text-gold'
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Action Buttons */}
             <div className="space-y-4">
