@@ -1,6 +1,6 @@
 import React from 'react';
 import { Product } from '../types';
-import { Heart, ShoppingBag, MessageCircle } from 'lucide-react';
+import { Heart, MessageCircle } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;

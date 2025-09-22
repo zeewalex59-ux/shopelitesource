@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { User, Search, Heart, ShoppingBag, Menu, X, LogOut, Settings } from 'lucide-react';
+import { User, Search, Heart, Menu, X, LogOut, Settings } from 'lucide-react';
 import { InfoPageType } from '../types';
 
 interface HeaderProps {
   user: any;
   onLogout: () => void;
-  cartItemCount: number;
-  onCartToggle: () => void;
   onInfoPageSelect: (type: InfoPageType['type']) => void;
   onCategorySelect?: (category: string) => void;
   onScrollToProducts?: () => void;
@@ -15,8 +13,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ 
   user, 
   onLogout, 
-  cartItemCount, 
-  onCartToggle,
   onInfoPageSelect,
   onCategorySelect,
   onScrollToProducts
@@ -88,18 +84,6 @@ const Header: React.FC<HeaderProps> = ({
             
             <button className="p-2 text-white hover:text-gold transition-colors duration-300">
               <Heart className="w-5 h-5" />
-            </button>
-            
-            <button 
-              onClick={onCartToggle}
-              className="p-2 text-white hover:text-gold transition-colors duration-300 relative"
-            >
-              <ShoppingBag className="w-5 h-5" />
-              {cartItemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gold text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartItemCount}
-                </span>
-              )}
             </button>
 
             {/* User Profile */}

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
-import { ArrowLeft, Heart, ShoppingBag, Star, MessageCircle, User } from 'lucide-react';
+import { ArrowLeft, Heart, Star, MessageCircle, User } from 'lucide-react';
 import ReviewSection from './ReviewSection';
 
 interface ProductDetailProps {
   product: Product;
   onBack: () => void;
-  onAddToCart: (product: Product, size?: string, color?: string) => void;
   isInWishlist: boolean;
   onToggleWishlist: () => void;
 }
@@ -14,20 +13,14 @@ interface ProductDetailProps {
 const ProductDetail: React.FC<ProductDetailProps> = ({
   product,
   onBack,
-  onAddToCart,
   isInWishlist,
   onToggleWishlist
 }) => {
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
-  const [quantity, setQuantity] = useState(1);
 
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   const colors = ['Black', 'White', 'Navy', 'Burgundy'];
-
-  const handleAddToCart = () => {
-    onAddToCart(product, selectedSize, selectedColor);
-  };
 
   const handleWhatsAppRequest = () => {
     const message = `Hi! I'm interested in this product from Elite Source:
@@ -169,39 +162,8 @@ Product Image: ${product.image}`;
               </div>
             </div>
 
-            {/* Quantity */}
-            <div>
-              <h3 className="text-white font-bold mb-4">QUANTITY</h3>
-              <div className="flex items-center space-x-4">
-                <button
-                  onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-                  className="w-12 h-12 border border-gray-700 rounded-lg text-white hover:border-gold hover:text-gold transition-all duration-300 disabled:opacity-50"
-                  disabled={quantity <= 1}
-                >
-                  -
-                </button>
-                <span className="text-xl font-bold text-white w-8 text-center">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-12 h-12 border border-gray-700 rounded-lg text-white hover:border-gold hover:text-gold transition-all duration-300"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
             {/* Action Buttons */}
             <div className="space-y-4">
-              <button
-                onClick={handleAddToCart}
-                className="w-full bg-gold text-black font-bold py-4 rounded-xl hover:bg-yellow-400 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center space-x-2"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                <span>ADD TO CART</span>
-              </button>
-              
               <button
                 onClick={handleWhatsAppRequest}
                 className="w-full bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-500 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center space-x-2"
@@ -248,39 +210,26 @@ Product Image: ${product.image}`;
                 )}
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-                  <div>
-                    <h4 className="text-white font-bold mb-2">DETAILS</h4>
-                    <ul className="text-gray-400 space-y-1">
-                      <li>Premium materials</li>
-                      <li>Handcrafted construction</li>
-                      <li>Limited edition</li>
-                      <li>Comes with authenticity certificate</li>
-                    </ul>
+                  <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+                    <p className="text-gray-400">
+                      <span className="text-white font-medium">Shipping:</span> Free premium shipping on all orders.
+                    </p>
                   </div>
-                  <div>
-                    <h4 className="text-white font-bold mb-2">CARE</h4>
-                    {product.careInstructions ? (
-                      <p className="text-gray-400">{product.careInstructions}</p>
-                    ) : (
-                      <ul className="text-gray-400 space-y-1">
-                        <li>Professional dry clean only</li>
-                        <li>Store in dust bag</li>
-                        <li>Keep away from direct sunlight</li>
-                        <li>Handle with care</li>
-                      </ul>
-                    )}
+                  <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+                    <p className="text-gray-400">
+                      <span className="text-white font-medium">Returns:</span> 30-day return policy.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Customer Reviews Section */}
-          <div className="mt-16">
-            <ReviewSection 
-              reviews={product.reviews || []}
-              productId={product.id}
-            />
+            {/* Reviews */}
+            {product.reviews && product.reviews.length > 0 && (
+              <div className="border-t border-gray-800 pt-8">
+                <ReviewSection reviews={product.reviews} />
+              </div>
+            )}
           </div>
         </div>
       </div>
