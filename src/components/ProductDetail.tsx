@@ -17,10 +17,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
   onToggleWishlist
 }) => {
   const [selectedSize, setSelectedSize] = useState<string>('');
-  const [selectedColor, setSelectedColor] = useState<string>('');
 
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-  const colors = ['Black', 'White', 'Navy', 'Burgundy'];
 
   const handleWhatsAppRequest = () => {
     const message = `Hi! I'm interested in this product from Elite Source:
@@ -137,26 +135,6 @@ Product Image: ${product.image}`;
                     }`}
                   >
                     {size}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Color Selection */}
-            <div>
-              <h3 className="text-white font-bold mb-4">COLOR</h3>
-              <div className="flex space-x-3">
-                {colors.map(color => (
-                  <button
-                    key={color}
-                    onClick={() => setSelectedColor(color)}
-                    className={`px-6 py-3 border rounded-lg font-medium transition-all duration-300 ${
-                      selectedColor === color
-                        ? 'border-gold bg-gold text-black'
-                        : 'border-gray-700 text-gray-300 hover:border-gold hover:text-gold'
-                    }`}
-                  >
-                    {color}
                   </button>
                 ))}
               </div>
